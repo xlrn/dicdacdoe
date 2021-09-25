@@ -1,0 +1,10 @@
+.square {
+    height: 50px;
+    width: 50px;
+    outline: auto;
+}
+
+#gameboard {
+    display: grid;
+    grid-template: repeat(3, 52px) / repeat(3, 52px);
+}

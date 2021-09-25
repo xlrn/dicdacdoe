@@ -13,10 +13,10 @@ const gameBoard = (() => {
     return {
         getSquare
     }
-})
+})();
 
 const displayController = (() => {
-    const container = document.querySelector('#container');
+    const gameboard = document.querySelector('#gameboard');
     const createSquare = (number) => {
         const square = document.createElement('div');
         square.setAttribute('id', `square${number}`);
@@ -24,17 +24,21 @@ const displayController = (() => {
         return square;
     }
 
-    const renderSquare = (boardLength) => {
+    const renderAllSquares = (boardLength) => {
         let n = 0;
         while(n < boardLength) {
             let square = createSquare(n);
-            container.appendChild(square);
+            gameboard.appendChild(square);
+            console.log('aaaa');
+            n++;
         }
     }
 
-    renderSquare(9);
-})
+    return {renderAllSquares}
+})();
 
 const playerFactory = (player, isTurn) => {
     return {player, isTurn}
 }
+
+displayController.renderAllSquares(9);
