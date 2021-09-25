@@ -21,6 +21,7 @@ const displayController = (() => {
         const square = document.createElement('div');
         square.setAttribute('id', `square${number}`);
         square.setAttribute('class', 'square');
+        square.textContent = gameBoard.getSquare(number);
         return square;
     }
 
@@ -29,16 +30,15 @@ const displayController = (() => {
         while(n < boardLength) {
             let square = createSquare(n);
             gameboard.appendChild(square);
-            console.log('aaaa');
             n++;
         }
     }
 
-    return {renderAllSquares}
+    renderAllSquares(9);
+
+    return {}
 })();
 
 const playerFactory = (player, isTurn) => {
     return {player, isTurn}
 }
-
-displayController.renderAllSquares(9);

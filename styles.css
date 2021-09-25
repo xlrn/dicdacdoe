@@ -2,6 +2,7 @@
     height: 50px;
     width: 50px;
     outline: auto;
+    text-align: center;
 }
 
 #gameboard {
