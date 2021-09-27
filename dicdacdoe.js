@@ -1,7 +1,8 @@
 const fakeboard = ['x','x','x','x','o','o','o','o','x'];
+const emptyboard = [];
 
 const gameBoard = (() => {
-    const board = fakeboard;
+    const board = emptyboard;
 
     const getSquare = (n) => {
         if (n < 0 || n > 9) {
@@ -29,8 +30,17 @@ const displayController = (() => {
         let n = 0;
         while(n < boardLength) {
             let square = createSquare(n);
+            square.addEventListener("click", handleClick);
             gameboard.appendChild(square);
             n++;
+        }
+    }
+
+    const handleClick = (e) => {
+        const square = e.target;
+        if (square.textContent == "") {
+            square.textContent = game.currentPlayer().sign;
+            game.changeTurn();
         }
     }
 
@@ -39,6 +49,29 @@ const displayController = (() => {
     return {}
 })();
 
-const playerFactory = (player, isTurn) => {
-    return {player, isTurn}
+const playerFactory = (sign, isTurn) => {
+    return {sign, isTurn}
 }
+
+const game = (() => {
+    const player1 = playerFactory("x", true);
+    const player2 = playerFactory("o", false);
+
+    const currentPlayer = () => {
+        if (player1.isTurn) {
+            return player1;
+        } else return player2;
+    }
+
+    const changeTurn = () => {
+        if (player1.isTurn) {
+            player1.isTurn = false;
+            player2.isTurn = true;
+        } else {
+            player1.isTurn = true;
+            player2.isTurn = false;
+        }
+    }
+
+    return {currentPlayer, changeTurn}
+})();
