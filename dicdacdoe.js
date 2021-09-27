@@ -75,3 +75,22 @@ const game = (() => {
 
     return {currentPlayer, changeTurn}
 })();
+
+const modalController = (() => {
+    const modal = document.querySelector('.modal');
+    const close = document.querySelector('.close');
+    
+    window.onload = () => {
+        modal.style.display = "block";
+    }
+
+    close.onclick = () => {
+        modal.style.display = "none";
+    }
+
+    window.onclick = (e) => {
+        if (e.target == modal) {
+            modal.style.display = "none";
+        } 
+    }
+})();
