@@ -53,11 +53,11 @@ const displayController = (() => {
     }
 
     const setPlayer1Name = () => {
-        player1.textContent = "X = " + game.player1.name;
+        player1.textContent = "X = " + game.getPlayer1Name();
     }
 
     const setPlayer2Name = () => {
-        player2.textContent = "O = " + game.player2.name;
+        player2.textContent = "O = " + game.getPlayer2Name();
     }
 
     const reloadBoard = () => {
@@ -84,6 +84,22 @@ const game = (() => {
         if (player1.isTurn) {
             return player1;
         } else return player2;
+    }
+
+    const setPlayer1 = (name) => {
+        player1 = playerFactory(name, "x", true);
+    }
+
+    const setPlayer2 = (name) => {
+        player2 = playerFactory(name, "o", true);
+    }
+
+    const getPlayer1Name = () => {
+        return player1.name;
+    }
+
+    const getPlayer2Name = () => {
+        return player2.name;
     }
 
     const changeTurn = () => {
@@ -116,7 +132,7 @@ const game = (() => {
         return null;
     }
 
-    return {player1, player2, currentPlayer, changeTurn, calculateWinner}
+    return {getPlayer1Name, setPlayer1, getPlayer2Name, setPlayer2, currentPlayer, changeTurn, calculateWinner}
 })();
 
 const modalController = (() => {
@@ -142,8 +158,8 @@ const modalController = (() => {
     }
 
     const handleClick = () => {
-        setPlayer1(p1name.value);
-        setPlayer2(p2name.value);
+        game.setPlayer1(p1name.value);
+        game.setPlayer2(p2name.value);
         displayController.setPlayer1Name();
         displayController.setPlayer2Name();
         modal.style.display = "none"; 
@@ -157,22 +173,7 @@ const modalController = (() => {
         displayController.reloadBoard();
     }
 
-    const getPlayer1Name = () => {
-        return p1value;
-    }
-
-    const getPlayer2Name = () => {
-        return p2value;
-    }
-    
-    const setPlayer1 = (name) => {
-        game.player1 = playerFactory(name, "x", true);
-    }
-
-    const setPlayer2 = (name) => {
-        game.player2 = playerFactory(name, "o", true);
-    }
     reset.addEventListener('click', openModal);
     submit.addEventListener('click', handleClick);
-    return {getPlayer1Name, getPlayer2Name}
+    return {}
 })();
