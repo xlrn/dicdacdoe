@@ -181,12 +181,6 @@ const modalController = (() => {
     window.onload = () => {
         modal.style.display = "block";
     }
-    
-    window.onclick = (e) => {
-        if (e.target == modal) {
-            modal.style.display = "none";
-        } 
-    }
 
     const handleClick = () => {
         game.setPlayer1(p1name.value);
