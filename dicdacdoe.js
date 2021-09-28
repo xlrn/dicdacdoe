@@ -14,8 +14,13 @@ const gameBoard = (() => {
     const clearBoard = () => {
         board = emptyboard;
     }
+    
+    const getBoard = () => {
+        return board;
+    }
 
     return {
+        getBoard,
         getSquare,
         clearBoard
     }
@@ -23,6 +28,7 @@ const gameBoard = (() => {
 
 const displayController = (() => {
     const gameboard = document.querySelector('#gameboard');
+    const winner = document.querySelector('#winMessage');
     const player1 = document.querySelector('#player1');
     const player2 = document.querySelector('#player2');
 
@@ -49,6 +55,10 @@ const displayController = (() => {
         if (square.textContent == "") {
             square.textContent = game.currentPlayer().sign;
             game.changeTurn();
+        }
+        if (game.calculateWinner(gameBoard.getBoard())) {
+            console.log('aaaa');
+            winner.textContent = game.currentPlayer + " is the winner!"
         }
     }
 
