@@ -61,11 +61,10 @@ const displayController = (() => {
             let index = parseInt(square.id.slice(6));
             gameBoard.setSquare(index, game.currentPlayer().sign);
             square.textContent = game.currentPlayer().sign;
+            if (game.calculateWinner(gameBoard.getBoard())) {
+                winner.textContent = game.currentPlayer().name + " is the winner!"
+            }
             game.changeTurn();
-        }
-        if (game.calculateWinner(gameBoard.getBoard())) {
-            console.log('aaaa');
-            winner.textContent = game.currentPlayer() + " is the winner!"
         }
     }
 
@@ -190,7 +189,15 @@ const modalController = (() => {
         displayController.reloadBoard();
     }
 
+    const validate = () => {
+        if (!p1name.value || !p2name.value) {
+            submit.disabled = true;
+        } else submit.disabled = false;
+    }
+
     reset.addEventListener('click', openModal);
     submit.addEventListener('click', handleClick);
+    p1name.addEventListener('change', validate);
+    p2name.addEventListener('change', validate);
     return {}
 })();
