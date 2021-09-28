@@ -11,6 +11,10 @@ const gameBoard = (() => {
         return board[n];
     }
 
+    const setSquare = (n, player) => {
+        board[n] = player;
+    }
+
     const clearBoard = () => {
         board = emptyboard;
     }
@@ -22,6 +26,7 @@ const gameBoard = (() => {
     return {
         getBoard,
         getSquare,
+        setSquare,
         clearBoard
     }
 })();
@@ -53,12 +58,14 @@ const displayController = (() => {
     const handleClick = (e) => {
         const square = e.target;
         if (square.textContent == "") {
+            let index = parseInt(square.id.slice(6));
+            gameBoard.setSquare(index, game.currentPlayer().sign);
             square.textContent = game.currentPlayer().sign;
             game.changeTurn();
         }
         if (game.calculateWinner(gameBoard.getBoard())) {
             console.log('aaaa');
-            winner.textContent = game.currentPlayer + " is the winner!"
+            winner.textContent = game.currentPlayer() + " is the winner!"
         }
     }
 
