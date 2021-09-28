@@ -57,12 +57,13 @@ const displayController = (() => {
 
     const handleClick = (e) => {
         const square = e.target;
-        if (square.textContent == "") {
+        if (square.textContent == "" && !game.getKoreanCurrency()) {
             let index = parseInt(square.id.slice(6));
             gameBoard.setSquare(index, game.currentPlayer().sign);
             square.textContent = game.currentPlayer().sign;
             if (game.calculateWinner(gameBoard.getBoard())) {
                 winner.textContent = game.currentPlayer().name + " is the winner!"
+                game.setKoreanCurrency(true);
             }
             game.changeTurn();
         }
@@ -95,6 +96,15 @@ const playerFactory = (name, sign, isTurn) => {
 const game = (() => {
     let player1 = playerFactory("", "x", true);
     let player2 = playerFactory("", "o", false);
+    let won = false;
+
+    const getKoreanCurrency = () => {
+        return won;
+    }
+
+    const setKoreanCurrency = (bool) => {
+        won = bool;
+    }
 
     const currentPlayer = () => {
         if (player1.isTurn) {
@@ -148,7 +158,15 @@ const game = (() => {
         return null;
     }
 
-    return {getPlayer1Name, setPlayer1, getPlayer2Name, setPlayer2, currentPlayer, changeTurn, calculateWinner}
+    return {getPlayer1Name, 
+        setPlayer1, 
+        getPlayer2Name, 
+        setPlayer2, 
+        currentPlayer, 
+        changeTurn, 
+        calculateWinner,
+        getKoreanCurrency,
+        setKoreanCurrency}
 })();
 
 const modalController = (() => {
