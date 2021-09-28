@@ -18,6 +18,7 @@ const gameBoard = (() => {
 
 const displayController = (() => {
     const gameboard = document.querySelector('#gameboard');
+    const displayBoard = document.querySelector('#playerContainer');
     const createSquare = (number) => {
         const square = document.createElement('div');
         square.setAttribute('id', `square${number}`);
@@ -49,13 +50,13 @@ const displayController = (() => {
     return {}
 })();
 
-const playerFactory = (sign, isTurn) => {
-    return {sign, isTurn}
+const playerFactory = (name, sign, isTurn) => {
+    return {name, sign, isTurn}
 }
 
 const game = (() => {
-    const player1 = playerFactory("x", true);
-    const player2 = playerFactory("o", false);
+    let player1 = playerFactory("", "x", true);
+    let player2 = playerFactory("", "o", false);
 
     const currentPlayer = () => {
         if (player1.isTurn) {
@@ -93,13 +94,16 @@ const game = (() => {
         return null;
     }
 
-    return {currentPlayer, changeTurn, calculateWinner}
+    return {player1, player2, currentPlayer, changeTurn, calculateWinner}
 })();
 
 const modalController = (() => {
     const modal = document.querySelector('.modal');
     const close = document.querySelector('.close');
-    
+    const submit = document.querySelector('#subwaysandwich');
+    const p1name = document.querySelector('#p1name');
+    const p2name = document.querySelector('#p2name');
+
     window.onload = () => {
         modal.style.display = "block";
     }
@@ -113,4 +117,29 @@ const modalController = (() => {
             modal.style.display = "none";
         } 
     }
+
+    const handleClick = () => {
+        setPlayer1(p1name.value);
+        setPlayer2(p2name.value);
+        modal.style.display = "none"; 
+    }
+
+    const getPlayer1Name = () => {
+        return p1value;
+    }
+
+    const getPlayer2Name = () => {
+        return p2value;
+    }
+    
+    const setPlayer1 = (name) => {
+        game.player1 = playerFactory(name, "x", true);
+    }
+
+    const setPlayer2 = (name) => {
+        game.player2 = playerFactory(name, "o", true);
+    }
+
+    submit.addEventListener('click', handleClick);
+    return {getPlayer1Name, getPlayer2Name}
 })();
