@@ -2,7 +2,7 @@ const fakeboard = ['x','x','x','x','o','o','o','o','x'];
 const emptyboard = [];
 
 const gameBoard = (() => {
-    const board = emptyboard;
+    let board = emptyboard;
 
     const getSquare = (n) => {
         if (n < 0 || n > 9) {
@@ -11,14 +11,21 @@ const gameBoard = (() => {
         return board[n];
     }
 
+    const clearBoard = () => {
+        board = emptyboard;
+    }
+
     return {
-        getSquare
+        getSquare,
+        clearBoard
     }
 })();
 
 const displayController = (() => {
     const gameboard = document.querySelector('#gameboard');
-    const displayBoard = document.querySelector('#playerContainer');
+    const player1 = document.querySelector('#player1');
+    const player2 = document.querySelector('#player2');
+
     const createSquare = (number) => {
         const square = document.createElement('div');
         square.setAttribute('id', `square${number}`);
@@ -45,9 +52,24 @@ const displayController = (() => {
         }
     }
 
+    const setPlayer1Name = () => {
+        player1.textContent = "X = " + game.player1.name;
+    }
+
+    const setPlayer2Name = () => {
+        player2.textContent = "O = " + game.player2.name;
+    }
+
+    const reloadBoard = () => {
+        while (gameboard.firstChild) {
+            gameboard.removeChild(gameboard.lastChild);
+        }
+        renderAllSquares(9);
+    }
+
     renderAllSquares(9);
 
-    return {}
+    return {setPlayer1Name, setPlayer2Name, reloadBoard}
 })();
 
 const playerFactory = (name, sign, isTurn) => {
@@ -103,6 +125,7 @@ const modalController = (() => {
     const submit = document.querySelector('#subwaysandwich');
     const p1name = document.querySelector('#p1name');
     const p2name = document.querySelector('#p2name');
+    const reset = document.querySelector('#reset');
 
     window.onload = () => {
         modal.style.display = "block";
@@ -121,7 +144,17 @@ const modalController = (() => {
     const handleClick = () => {
         setPlayer1(p1name.value);
         setPlayer2(p2name.value);
+        displayController.setPlayer1Name();
+        displayController.setPlayer2Name();
         modal.style.display = "none"; 
+        p1name.value = "";
+        p2name.value = "";
+    }
+
+    const openModal = () => {
+        modal.style.display = "block";
+        gameBoard.clearBoard();
+        displayController.reloadBoard();
     }
 
     const getPlayer1Name = () => {
@@ -139,7 +172,7 @@ const modalController = (() => {
     const setPlayer2 = (name) => {
         game.player2 = playerFactory(name, "o", true);
     }
-
+    reset.addEventListener('click', openModal);
     submit.addEventListener('click', handleClick);
     return {getPlayer1Name, getPlayer2Name}
 })();
