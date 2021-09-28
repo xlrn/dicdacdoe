@@ -1,8 +1,5 @@
-const fakeboard = ['x','x','x','x','o','o','o','o','x'];
-const emptyboard = [];
-
 const gameBoard = (() => {
-    let board = emptyboard;
+    let board = [];
 
     const getSquare = (n) => {
         if (n < 0 || n > 9) {
@@ -16,7 +13,7 @@ const gameBoard = (() => {
     }
 
     const clearBoard = () => {
-        board = emptyboard;
+        board = [];
     }
     
     const getBoard = () => {
@@ -77,6 +74,10 @@ const displayController = (() => {
         player2.textContent = "O = " + game.getPlayer2Name();
     }
 
+    const clearWinner = () => {
+        winner.textContent = "";
+    }
+
     const reloadBoard = () => {
         while (gameboard.firstChild) {
             gameboard.removeChild(gameboard.lastChild);
@@ -86,7 +87,7 @@ const displayController = (() => {
 
     renderAllSquares(9);
 
-    return {setPlayer1Name, setPlayer2Name, reloadBoard}
+    return {setPlayer1Name, setPlayer2Name, reloadBoard, clearWinner}
 })();
 
 const playerFactory = (name, sign, isTurn) => {
@@ -199,10 +200,13 @@ const modalController = (() => {
         modal.style.display = "none"; 
         p1name.value = "";
         p2name.value = "";
+        submit.disabled = true;
     }
 
     const openModal = () => {
         modal.style.display = "block";
+        game.setKoreanCurrency(false);
+        displayController.clearWinner();
         gameBoard.clearBoard();
         displayController.reloadBoard();
     }
