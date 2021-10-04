@@ -67,11 +67,11 @@ const displayController = (() => {
     }
 
     const setPlayer1Name = () => {
-        player1.textContent = "X = " + game.getPlayer1Name();
+        player1.textContent = "Player X = " + game.getPlayer1Name();
     }
 
     const setPlayer2Name = () => {
-        player2.textContent = "O = " + game.getPlayer2Name();
+        player2.textContent = "Player O = " + game.getPlayer2Name();
     }
 
     const clearWinner = () => {

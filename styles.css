@@ -1,13 +1,22 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
 .square {
     height: 50px;
     width: 50px;
     outline: auto;
     text-align: center;
+    margin: auto;
+    font-size: 40px;
 }
 
 #gameboard {
     display: grid;
     grid-template: repeat(3, 52px) / repeat(3, 52px);
+    margin: auto;
+    width: fit-content;
 }
 
 .modal {
@@ -43,4 +52,42 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
+.header {
+    background-color: aquamarine;
+    padding: 30px;
+    text-align: center;
+    font-size: 40px;
+    border-bottom: 3px solid #aaa;
+}
+
+#container {
+    margin: auto;
+    width: 50%;
+}
+
+#player1 {
+    text-align: center;
+    margin: 10px 0px 10px 0px;
+}
+
+#player2 {
+    text-align: center;
+    margin: 10px 0px 10px 0px;
+}
+
+#buttonBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px 10px 0px;
+}
+
+#displayBoard {
+    margin: 10px 0px 10px 0px;
+}
+
+#winMessage {
+    text-align: center;
+}
